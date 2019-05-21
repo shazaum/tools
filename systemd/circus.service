@@ -1,0 +1,12 @@
+[Unit]
+After=syslog.target network.target nss-lookup.target
+
+[Service]
+Type=simple
+ExecReload=/usr/local/bin/circusd reload
+ExecStart=/usr/local/bin/circusd /opt/circus/circus.ini
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=default.target
