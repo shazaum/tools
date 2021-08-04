@@ -17,3 +17,17 @@ echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https:/
 
 install_k8s kubelet kubeadm kubectl
 apt-mark hold kubelet kubeadm kubectl
+
+curl -fsSL https://get.docker.com |sh
+
+#master
+if [ "$i" == "master" ]; then
+	swapoff -a
+
+	kubeadm init
+
+	mkdir -p $HOME/.kube
+	cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+	chown $(id -u):$(id -g) $HOME/.kube/config
+	kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+fi
