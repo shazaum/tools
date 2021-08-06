@@ -1,13 +1,14 @@
-#!/bin/sh
+#!/bin/bash
+
+swapoff -a
+par1="x$1"
 
 function install_k8s {
-
 	apt update
 	for i in $@
 	do
 		apt install -y $i
 	done
-
 }
 
 install_k8s apt-transport-https ca-certificates curl
@@ -21,9 +22,7 @@ apt-mark hold kubelet kubeadm kubectl
 curl -fsSL https://get.docker.com |sh
 
 #master
-if [ "$i" == "master" ]; then
-	swapoff -a
-
+if [ "$par1" = "xmaster" ]; then
 	kubeadm init
 
 	mkdir -p $HOME/.kube
