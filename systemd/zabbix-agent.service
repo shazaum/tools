@@ -1,0 +1,14 @@
+[Unit]
+Description=Zabbix Agent
+After=network.target
+
+[Service]
+Type=simple
+User=zabbix
+Group=zabbix
+ExecStart=/opt/zabbix-agent/sbin/zabbix_agent -c /opt/zabbix-agent/conf/zabbix_agent.conf --foreground
+Restart=on-abnormal
+PidFile=/opt/zabbix-agent/run/zabbix_agent.pid
+
+[Install]
+WantedBy=multi-user.target
